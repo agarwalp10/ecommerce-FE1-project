@@ -4,7 +4,7 @@ A React-based e-commerce application that displays products from the FakeStore A
 
 ## Features Overview
 ### Product Catalog
-
+https://github.com/agarwalp10/ecommerce-FE1-project/blob/main/README.md
 Displays all products retrieved from the FakeStore API
 
 **Each product shows:**
