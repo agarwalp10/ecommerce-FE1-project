@@ -19,6 +19,7 @@ on:
 jobs:
   build: #continuous integration job
     # ubuntu-latest is a virtual environment provided by GitHub Actions, lynix based
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
