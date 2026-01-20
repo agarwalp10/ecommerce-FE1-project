@@ -11,7 +11,6 @@
 
 // === Snapshot test to verify UI rendering correctly
 
-import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import Logout from '../pages/Logout'
 

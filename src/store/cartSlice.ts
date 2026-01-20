@@ -13,7 +13,7 @@ import type { Product } from "../types/types";
 // Cart item type or shape, representing a product in the cart with quantity
 // storing only necessary fields
 export interface CartItem {
-    id: number;
+    id: Product["id"]; // number | string
     title: string;
     price: number;
     image: string;
@@ -82,7 +82,7 @@ const cartSlice = createSlice({
         // Update quantity (optional but useful)
         updateQuantity: (
             state,
-            action: PayloadAction<{ id: number; quantity: number }>
+            action: PayloadAction<{ id: Product["id"]; quantity: number }>
             ) => {
             const { id, quantity } = action.payload;
             const item = state.items.find((i) => i.id === id);
@@ -98,7 +98,7 @@ const cartSlice = createSlice({
         },
 
         // Remove item completely (per your requirement)
-        removeFromCart: (state, action: PayloadAction<number>) => {
+        removeFromCart: (state, action: PayloadAction<Product["id"]>) => {
             state.items = state.items.filter((i) => i.id !== action.payload);
             saveCartToSession(state.items);
         },
