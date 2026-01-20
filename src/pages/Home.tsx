@@ -19,6 +19,9 @@ import { fetchProducts, fetchCategories } from '../api/api';
 import { Link } from "react-router-dom";
 // redux hook to get cart count from store
 import { useAppSelector } from "../store/hooks";
+import { getAdminProducts } from "../services/firestoreAdminProducts";
+
+
 
 const Home: React.FC = () => {
 
@@ -48,6 +51,23 @@ const Home: React.FC = () => {
         queryFn: fetchCategories,
     });
 
+  //======= Firestore Products Query===
+  // fetch the admin-created products from Firestore so we can show them alongside FakeStore products
+    const {
+        data: adminProducts = [],
+        isLoading: adminLoading,
+        error: adminError,
+    } = useQuery({
+        queryKey: ["adminProducts"],
+        queryFn: getAdminProducts,
+    });
+
+    // ===== Merge products by APPENDING Firestore products ====
+    const mergedProducts: Product[] = useMemo(() => {
+        return [...products, ...adminProducts];
+    }, [products, adminProducts]);
+
+
     // getting cart count from Redux store - global state
     // updates whenever cart state changes automatically
     const cartCount = useAppSelector((s) =>
@@ -55,10 +75,11 @@ const Home: React.FC = () => {
     );
     // filtering component to dynamically update it from products + selected category
     // function for filtering (used useMemo for performance optimization)
+    // filter will be applied to merged products list (firestore + fakestore)
     const filteredProducts = useMemo(() => {
-        if (selectedCategory === "") return products;
-        return products.filter((p: Product) => p.category === selectedCategory);
-    }, [products, selectedCategory]);
+        if (selectedCategory === "") return mergedProducts;
+        return mergedProducts.filter((p: Product) => p.category === selectedCategory);
+    }, [mergedProducts, selectedCategory]);
     
 
     // UI for Home page
@@ -92,6 +113,11 @@ const Home: React.FC = () => {
             </div>
             {isLoading && <h1>Loading...</h1>}
             {error && <p>Something went wrong loading products.</p>}
+            {/* show Firestore loading/error */}
+            {/* helps  debug Firestore separately from FakeStore */}
+            {adminLoading && <p>Loading admin products...</p>}
+            {adminError && <p>Something went wrong loading admin products.</p>}
+
 
             {/* product cards */}
             <div className="d-flex flex-wrap gap-3 justify-content-center">

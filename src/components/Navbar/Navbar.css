@@ -1,0 +1,19 @@
+.nav-containers {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: #000;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.link {
+    color: #b13131;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+
+}
