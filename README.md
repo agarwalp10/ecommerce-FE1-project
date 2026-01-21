@@ -1,6 +1,6 @@
 # E-Commerce Product Catalog & Shopping Cart
 
-A React-based e-commerce application that displays products from the FakeStore API, allowing users to filter by category, add items to a shopping cart, and simulate a checkout experience. The app demonstrates React Query for server data and Redux Toolkit for global state management.
+A React-based e-commerce application that displays products from the FakeStore API, allowing users to filter by category, add items to a shopping cart, and simulate a checkout experience. The App also allows users to secure orders and view order history. The app demonstrates React Query for server data and Redux Toolkit for global state management. We have also used Firebase for Authentication and Firestore for database design
 
 ## Features Overview
 ### Product Catalog
@@ -65,6 +65,15 @@ Checkout is simulated by:
 * Clearing sessionStorage
 * User receives visual confirmation when checkout is complete
 
+### Orders and Checkout update
+* when users place items in the cart and checkout, orders are stored in firestore as immutable documents containing user id, items, total cost, and its timestamp
+
+### Order details
+* View all past orders for the logged-in user
+* View detailed breakdown of a single order
+* Orders are sorted by most recent
+* Users can only see their own orders
+
 ### Tech Stack
 React	-- UI development
 TypeScript	-- Type safety
@@ -76,6 +85,10 @@ React Redux --	Connect Redux to React
 sessionStorage	-- Cart persistence
 Bootstrap -- 	Layout and styling
 @smastrom/react-rating	-- Product rating display
+Backend - Firebase
+* firebase authentication
+* Firestore for db design
+* firestore security rules 
 
 
 ## Architecture & State Management
@@ -132,6 +145,10 @@ User clicks Checkout
 Redux state + sessionStorage cleared
    ↓
 Checkout confirmation displayed
+   ↓
+Order Histry
+   ↓
+Order Details 
 
 ## Getting Started
 Clone the Repository
@@ -153,9 +170,13 @@ http://localhost:5173
 src/
 ├── api/            # API calls (Axios + FakeStoreAPI)
 ├── components/     # Reusable UI components (ProductCard)
-├── pages/          # Page components (Home, Cart)
+├── context/        # AuthContext 
+├── lib/firebase     # Firebase SDKs
+├── pages/          # Page components (Home, Cart, Admin Products, login/logout, orders, profile, register)
 ├── store/          # Redux store, slice, and hooks
+├── service/     # firestore
 ├── types/          # TypeScript types
+├── Utils/     # isAdmin for admin email 
 ├── App.tsx         # Routing + providers
 └── main.tsx        # App entry point
 
@@ -163,11 +184,7 @@ src/
 Notes
 
 This project was built to demonstrate:
-
-Modern React architecture
-
-Clear separation of concerns
-
-Real-world state management patterns
-
-Code is structured for readability, scalability, and maintainability
+* Modern React architecture
+* Clear separation of concerns
+* Real-world state management patterns
+* Code is structured for readability, scalability, and maintainability
