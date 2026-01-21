@@ -21,13 +21,15 @@ const Orders = () => {
 
 
     // React Query to fetch orders for the logged-in user
-    const { data: orders = [], isLoading } = useQuery({
+    const { data: orders = [], isLoading, isError, error } = useQuery({
         queryKey: ["orders", user?.uid],
         queryFn: () => getOrdersByUser(user!.uid),
         enabled: !!user,
     });
 
     if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error loading orders: {(error as Error).message}</p>;
+
 
     return (
         <div className="container py-3">

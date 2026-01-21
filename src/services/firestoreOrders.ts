@@ -8,7 +8,6 @@ import { addDoc, collection, serverTimestamp, query, where, getDocs, doc, getDoc
 import { db } from "../lib/firebase/firebase";
 import type { CartItem } from "../store/cartSlice";
 import type { Order } from "../types/orders";
-import { orderBy } from "firebase/firestore";
 
 // ===== Create an order from cart items =====
 
@@ -47,7 +46,6 @@ export async function getOrdersByUser(userId: string): Promise<Order[]> {
     const q = query(
         collection(db, "orders"),
         where("userId", "==", userId),
-        orderBy("createdAt", "desc")
     );
 
     const snap = await getDocs(q);
