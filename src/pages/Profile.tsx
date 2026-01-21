@@ -89,6 +89,7 @@ const Profile: React.FC = () => {
         const userRef = doc(db, "users", user.uid);
 
         // Firestore is your profile storage
+        // gets existing fields by user.uid, merges with new data
         await setDoc(
             userRef,
             {

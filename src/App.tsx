@@ -15,6 +15,8 @@ import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminProducts from "./pages/AdminProducts";
+import Orders from "./pages/Orders";
+import OrderDetails from "./pages/OrderDetails";
 
 
 // react query client instance handling caching, laoading states, and refetching
@@ -39,16 +41,33 @@ function App() {
             {/* Logout Page */}
             <Route path="/logout" element={<Logout />} />
 
-            {/* Protected Route */}
+            {/* ====== Protected Route ====== */}
+
+            {/* profile */}
             <Route path="/profile" element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
             } />
 
+            {/* admin route */}
             <Route path="/admin/products" element={
               <PrivateRoute>
                 <AdminProducts />
+              </PrivateRoute>
+            } />
+
+            {/* orders route */}
+            <Route path="/orders" element={
+              <PrivateRoute>
+                <Orders />
+              </PrivateRoute>
+            } />
+            
+            {/* order details route */}
+            <Route path="/orders/:orderId" element={
+              <PrivateRoute>
+                <OrderDetails />
               </PrivateRoute>
             } />
 

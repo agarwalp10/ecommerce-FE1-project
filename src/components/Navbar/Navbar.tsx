@@ -20,7 +20,7 @@ const Navbar = () => {
                     {isAdminEmail(user.email) && (
                         <Link to="/admin/products" className="link">Admin Products</Link>
                     )}
-                    
+                    <Link to="/orders" className="link">Orders</Link>
                     <Link to="/logout" className="link">Logout</Link>
                 </>
             ) : (

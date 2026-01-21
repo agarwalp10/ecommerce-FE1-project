@@ -13,6 +13,10 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { clearCart, removeFromCart, updateQuantity } from "../store/cartSlice";
 import { Link } from "react-router-dom";
 
+// imports for authentication and order creation
+import { useAuth } from "../context/AuthContext";
+import { createOrder } from "../services/firestoreOrders";
+
 // Cart page component
 
 const Cart: React.FC = () => {
@@ -32,10 +36,25 @@ const Cart: React.FC = () => {
         return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     }, [items]);
 
-    // Handler for checkout button to show message and clear cart (since API doesn't support real checkout)
-    const handleCheckout = () => {
-        dispatch(clearCart()); // clears Redux + sessionStorage
-        setCheckoutMessage("Checkout complete!");
+    // Auth context to get current user
+    const { user } = useAuth();
+
+    // Handler for checkout button to create order
+    const handleCheckout = async () => {
+        if (!user) {
+            alert("Please login to checkout");
+            return;
+        }
+
+        if (items.length === 0) return;
+
+        try {
+            await createOrder(user.uid, items);
+            dispatch(clearCart());
+            setCheckoutMessage("Order placed successfully!");
+        } catch (err) {
+            alert("Failed to place order");
+        }
     };
 
     // UI for Cart page

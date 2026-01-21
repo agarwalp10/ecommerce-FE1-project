@@ -1,3 +1,5 @@
+// src/styles/auth-styles.ts
+
 import type { CSSProperties } from "react";
 
 type Styles = Record<string, CSSProperties>;
