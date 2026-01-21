@@ -1,5 +1,6 @@
 // src/pages/Register.tsx
 
+// Register page - allows new users to create an account
 
 import { useState } from "react"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
@@ -22,7 +23,7 @@ const Register = () => {
     // ==== HANDLE FORM SUBMISSION ====
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // prevent default form submission behavior
-        setError(""); // reset error message
+        setError(""); // reset error messagenpm
 
 
         try {
