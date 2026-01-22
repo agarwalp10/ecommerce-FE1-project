@@ -10,11 +10,23 @@ import  {Rating } from '@smastrom/react-rating';
 // redux hooks and actions allowing us to dispatch actions to the store
 import { useAppDispatch } from "../store/hooks"; 
 import { addToCart } from "../store/cartSlice"; 
+import { useState } from "react";
 
 // this is expect a product as prop
 const ProductCard: React.FC< {product: Product}> = ({ product }) => {
     // allows program to dispatch actions to the Redux store
     const dispatch = useAppDispatch();
+
+    const [showAdded, setShowAdded] = useState(false);
+    const handleAddToCart = () => {
+        dispatch(addToCart(product));
+        setShowAdded(true);
+
+        window.setTimeout(() => {
+            setShowAdded(false);
+        }, 1000);
+    };
+
     // UI for a single product card
     return (
         <div className="col-md-3 p-3 d-flex flex-column align-items-center gap-3 shadow">
@@ -28,9 +40,14 @@ const ProductCard: React.FC< {product: Product}> = ({ product }) => {
             {/* Button to add product to cart */}
             <button
                 className="btn btn-primary"
-                onClick={() => dispatch(addToCart(product))}
+                onClick={handleAddToCart}
             >
                 Add to Cart
+                {showAdded && (
+                    <span className="text-success d-block mt-2">
+                        Added!
+                    </span>
+                )}
             </button>
         </div>
     )

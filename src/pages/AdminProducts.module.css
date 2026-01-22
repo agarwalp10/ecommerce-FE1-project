@@ -1,0 +1,102 @@
+/* Page layout */
+.container {
+    padding: 1rem 0;
+}
+
+/* Card / panel */
+.panel {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-bottom: 20px;
+    max-width: 700px;
+    border-radius: 8px;
+}
+
+/* Error text */
+.error {
+    color: crimson;
+    margin: 8px 0 12px;
+}
+
+/* Form layout */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rowTop {
+    align-items: flex-start;
+}
+
+.label {
+    width: 120px;
+    font-weight: 600;
+}
+
+.labelTop {
+    margin-top: 6px;
+}
+
+.input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #666;
+}
+
+.textarea {
+    flex: 1;
+    min-height: 80px;
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    outline: none;
+    resize: vertical;
+}
+
+.textarea:focus {
+    border-color: #666;
+}
+
+.smallInput {
+    width: 120px;
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    outline: none;
+}
+
+.smallInput:focus {
+    border-color: #666;
+}
+
+.actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #222;
+    background: white;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

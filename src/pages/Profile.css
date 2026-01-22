@@ -1,0 +1,35 @@
+/* src/pages/Profile.css */
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.profileRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profileLabel {
+    width: 80px;          /* controls label column width */
+    text-align: right;    /* makes labels line up nicely */
+    font-weight: 600;
+}
+
+.profileField {
+    flex: 1;              /* input takes remaining space */
+}
+
+/* Buttons: same width + spacing */
+.profileButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.fullWidth {
+    width: 100%;
+}

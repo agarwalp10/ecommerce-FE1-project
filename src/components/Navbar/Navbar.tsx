@@ -2,38 +2,82 @@
 
 
 import { useAuth } from "../../context/AuthContext" // allows access to user and setUser, user info
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import "./Navbar.css" // import css for navbar styling
 import { isAdminEmail } from "../../utils/isAdmin";
 
 const Navbar = () => {
     const { user } = useAuth(); // get user from auth context
 
+
+
+
     return (
-        <div className="nav-container">
-            <Link to="/" className="link">Home</Link>
-            <Link to="/cart" className="link">Cart</Link>
-            {user ? (
-                <>
-                    <Link to="/profile" className="link">Profile</Link>
+        <nav className="nav">
+            {/* Brand */}
+            <div className="nav-inner">
+                <Link to="/" className="brand" >
+                    E-Commerce App
+                </Link>
+            </div>
+            {/* Middle: Main links */}
+            <div className="nav-links">
+                <NavLink to="/" className={({ isActive }) => (isActive ? "link active" : "link")}>
+                    Home
+                </NavLink>
+                <NavLink to="/cart" className={({ isActive }) => (isActive ? "link active" : "link")}>
+                    Cart
+                </NavLink>
+
+                {user && (
+                    <>
+                    <NavLink to="/orders" className={({ isActive }) => (isActive ? "link active" : "link")}>
+                        Orders
+                    </NavLink>
 
                     {isAdminEmail(user.email) && (
-                        <Link to="/admin/products" className="link">Admin Products</Link>
+                        <NavLink
+                        to="/admin/products"
+                        className={({ isActive }) => (isActive ? "link active" : "link")}
+                        >
+                        Admin
+                        </NavLink>
                     )}
-                    <Link to="/orders" className="link">Orders</Link>
-                    <Link to="/logout" className="link">Logout</Link>
-                </>
-            ) : (
-                <>
-                    <Link to="/register" className="link">Register</Link>
-                    <Link to="/login" className="link">Login</Link>
-                </>
-                
-            )}
+                    </>
+                )}
+            </div>
 
-        </div>
+            {/* Right: Auth links */}
+            <div className="nav-actions">
+                {user ? (
+                    <>
+                    <NavLink
+                        to="/profile"
+                        className={({ isActive }) => (isActive ? "link active" : "link")}
+                    >
+                        Profile
+                    </NavLink>
+                    <NavLink 
+                        to="/logout" 
+                        className={({ isActive }) => (isActive ? "link active" : "link")}>
+                        Logout
+                    </NavLink>
+                    </>
+                ) : (
+                    <>
+                    <NavLink to="/login" 
+                        className={({ isActive }) => (isActive ? "link active" : "link")}>
+                        Log in
+                    </NavLink>
+                    <NavLink to="/register" className="btn btn-primary">
+                        Register
+                    </NavLink>
+                    </>
+                )}
+            </div>
 
+        </nav>
     );
 };
 
-export default Navbar
+export default Navbar;

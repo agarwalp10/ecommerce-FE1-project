@@ -17,6 +17,7 @@ createAdminProduct,
     updateAdminProduct,
     type FirestoreProductInput,
 } from "../services/firestoreAdminProducts";
+import styles from "./AdminProducts.module.css";
 
 // convert "admin_<docId>" back to Firestore docId
 const getDocIdFromAdminId = (id: string | number) => {
@@ -201,72 +202,107 @@ const AdminProducts: React.FC = () => {
             <h1>Admin Product Management</h1>
 
             {/* ===== CREATE FORM ===== */}
-            <div style={{ border: "1px solid #ddd", padding: 12, marginBottom: 16 }}>
+            <div className={styles.panel}>
                 <h3>Create Product (Firestore)</h3>
 
                 {createMutation.error && (
-                <p style={{ color: "crimson" }}>
+                    <p className={styles.error}>
                     {(createMutation.error as any)?.message ?? "Create failed"}
-                </p>
+                    </p>
                 )}
 
-                <input
-                    placeholder="Title"
-                    value={form.title}
-                    onChange={onCreateChange("title")}
-                />
+    
+                <div className={styles.form}>
+                    {/* Title */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Title</label>
+                        <input
+                            className={styles.input}
+                            value={form.title}
+                            onChange={onCreateChange("title")}
+                        />
+                    </div>
 
-                <input
-                    placeholder="Price"
-                    type="number"
-                    value={form.price}
-                    onChange={onCreateChange("price")}
-                />
+                    {/* Price */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Price ($)</label>
+                        <input
+                            className={styles.input}
+                            type="number"
+                            value={form.price}
+                            onChange={onCreateChange("price")}
+                        />
+                    </div>
 
-                <input
-                    placeholder="Category"
-                    value={form.category}
-                    onChange={onCreateChange("category")}
-                />
+                    {/* Category */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Category</label>
+                        <input
+                            className={styles.input}
+                            value={form.category}
+                            onChange={onCreateChange("category")}
+                        />
+                    </div>
 
-                <input
-                    placeholder="Image URL"
-                    value={form.image}
-                    onChange={onCreateChange("image")}
-                />
+                    {/* Image URL */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Image URL</label>
+                        <input
+                            className={styles.input}
+                            value={form.image}
+                            onChange={onCreateChange("image")}
+                        />
+                    </div>
 
-                <textarea
-                    placeholder="Description"
-                    value={form.description}
-                    onChange={onCreateChange("description")}
-                />
+                    {/* Description */}
+                    <div className={`${styles.row} ${styles.rowTop}`}>
+                        <label className={`${styles.label} ${styles.labelTop}`}>Description</label>
+                        <textarea
+                            className={styles.textarea}
+                            value={form.description}
+                            onChange={onCreateChange("description")}
+                        />
+                    </div>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                    <input
-                        placeholder="Rating Rate (0-5)"
-                        type="number"
-                        value={form.rating.rate}
-                        onChange={onCreateRatingChange("rate")}
-                    />
-                    <input
-                        placeholder="Rating Count"
-                        type="number"
-                        value={form.rating.count}
-                        onChange={onCreateRatingChange("count")}
-                    />
+                    {/* Rating Rate */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Rating (0–5)</label>
+                        <input
+                            className={styles.smallInput}
+                            type="number"
+                            value={form.rating.rate}
+                            onChange={onCreateRatingChange("rate")}
+                        />
+                    </div>
+
+                    {/* Rating Count */}
+                    <div className={styles.row}>
+                        <label className={styles.label}>Review Count</label>
+                        <input
+                            className={styles.smallInput}
+                            type="number"
+                            value={form.rating.count}
+                            onChange={onCreateRatingChange("count")}
+                        />
+                    </div>
+
+                    {/* Submit */}
+                    <div className={styles.actions}>
+                        <button
+                            className={styles.button}
+                            onClick={() => {
+                            const err = validate(form);
+                            if (err) return alert(err);
+                            createMutation.mutate();
+                            }}
+                            disabled={createMutation.isPending}
+                        >
+                            {createMutation.isPending ? "Creating..." : "Create Product"}
+                        </button>
+                    </div>
                 </div>
-
-                <button
-                    onClick={() => {
-                        const err = validate(form);
-                        if (err) return alert(err);
-                        createMutation.mutate();
-                    }}
-                    disabled={createMutation.isPending}
-                    >
-                    {createMutation.isPending ? "Creating..." : "Create"}
-                </button>
             </div>
+
 
             {/* ===== LIST ===== */}
             <h2>Firestore Products</h2>

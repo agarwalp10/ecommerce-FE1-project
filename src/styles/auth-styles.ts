@@ -26,7 +26,6 @@ const styles: Styles = {
     },
     input: {
         display: "block",
-        marginBottom: "10px",
         padding: "10px",
         borderRadius: "5px",
         border: "1px solid #ccc",
@@ -45,6 +44,7 @@ const styles: Styles = {
         color: "white",
         padding: "10px",
         borderRadius: "5px",
+        border: "none",
         cursor: "pointer",
     },
     deleteAccountButton: {

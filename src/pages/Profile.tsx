@@ -8,6 +8,7 @@ import { updateProfile, deleteUser } from "firebase/auth";
 import { db } from "../lib/firebase/firebase";
 import { doc, getDoc, setDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
 import styles from "../styles/auth-styles";
+import "./Profile.css"
 
 type UserDoc = {
     uid: string;
@@ -141,55 +142,74 @@ const Profile: React.FC = () => {
     if (!user) return <p>Please login.</p>;
     if (pageLoading) return <p>Loading profile...</p>;
 
+    // Main form UI
     return (
         <div style={styles.form}>
-        <h1>Profile</h1>
+            <h1>Profile</h1>
 
-        <form onSubmit={handleSave}>
-            <input
-            style={styles.input}
-            type="text"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            placeholder="Name"
-            disabled={saving}
-            />
+            <form onSubmit={handleSave} className="profileForm">
+            {/* Name */}
+            <div className="profileRow">
+                <label className="profileLabel">Name</label>
+                <input
+                    className="profileField"
+                    style={styles.input}
+                    type="text"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="Name"
+                    disabled={saving}
+                    />
+            </div>
 
-            <input
-            style={styles.input}
-            disabled
-            type="email"
-            value={user.email ?? ""}
-            placeholder="Email"
-            />
+            {/* Email */}
+            <div className="profileRow">
+                <label className="profileLabel">Email</label>
+                <input
+                    className="profileField"
+                    style={styles.input}
+                    disabled
+                    type="email"
+                    value={user.email ?? ""}
+                    placeholder="Email"
+                    />
+            </div>
 
-            <input
-            style={styles.input}
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Age"
-            disabled={saving}
-            />
+            {/* Age */}
+            <div className="profileRow">
+                <label className="profileLabel">Age</label>
+                <input
+                    className="profileField"
+                    style={styles.input}
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    placeholder="Age"
+                    disabled={saving}
+                    />
+            </div>
 
-            <button style={styles.button} type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save"}
-            </button>
+            {/* Buttons */}
+            <div className="profileButtons">
+                <button className="fullWidth smallButton" style={styles.button} type="submit" disabled={saving}>
+                    {saving ? "Saving..." : "Save"}
+                </button>
+
+                <button
+                    className="fullWidth smallButton"
+                    type="button"
+                    onClick={handleDeleteAccount}
+                    style={styles.deleteAccountButton}
+                    disabled={saving}
+                    >
+                    Delete Account
+                </button>
+            </div>
 
             {success && <p style={styles.success}>{success}</p>}
             {error && <p style={styles.error}>{error}</p>}
+            </form>
 
-            <div>
-            <button
-                type="button"
-                onClick={handleDeleteAccount}
-                style={styles.deleteAccountButton}
-                disabled={saving}
-            >
-                Delete Account
-            </button>
-            </div>
-        </form>
         </div>
     );
 };

@@ -85,6 +85,7 @@ const Home: React.FC = () => {
     // UI for Home page
     return (
         <div className="container py-3">
+            <h1>Products</h1>
             {/* header for filtering and cart */}
             <div className="d-flex align-items-center justify-content-between mb-3">
                 <div className="d-flex gap-2 align-items-center">
