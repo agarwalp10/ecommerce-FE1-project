@@ -67,6 +67,13 @@ const Home: React.FC = () => {
         return [...products, ...adminProducts];
     }, [products, adminProducts]);
 
+    // Merge categories from FakeStore and Firestore products
+    const mergedCategories: Category[] = useMemo(() => {
+        const fakeStoreCategories = categories || [];
+        const adminCategories = Array.from(new Set(adminProducts.map(p => p.category)));
+        return Array.from(new Set([...fakeStoreCategories, ...adminCategories]));
+    }, [categories, adminProducts]);
+
 
     // getting cart count from Redux store - global state
     // updates whenever cart state changes automatically
@@ -97,7 +104,7 @@ const Home: React.FC = () => {
                     >
                         <option value="">All Categories</option>
 
-                        {categories?.map((category:Category) => (
+                        {mergedCategories.map((category:Category) => (
                             <option value={category} key={category}>{category}</option>
                         ))}
                     </select>
